@@ -12,7 +12,73 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 app.use(cors());
 app.use(express.json());
 
-// API endpoint to handle questions
+// Store questions in memory (for demonstration purposes)
+let questions = [];
+
+// Endpoint to add a question
+app.post('/add-question', (req, res) => {
+    const { question } = req.body;
+
+    if (!question) {
+        return res.status(400).json({ error: 'Question is required' });
+    }
+
+    questions.push(question); // Add the question to the list
+    res.status(200).json({ message: 'Question added successfully', questions });
+});
+
+// Endpoint to remove a question
+app.post('/remove-question', (req, res) => {
+    const { question } = req.body;
+
+    if (!question) {
+        return res.status(400).json({ error: 'Question is required' });
+    }
+
+    questions = questions.filter(q => q !== question); // Remove the question from the list
+    res.status(200).json({ message: 'Question removed successfully', questions });
+});
+
+// Endpoint to get all questions
+app.get('/get-questions', (req, res) => {
+    res.status(200).json({ questions });
+});
+
+// Endpoint to answer selected questions
+app.post('/answer-selected-questions', async (req, res) => {
+    const { text, selectedQuestions } = req.body;
+
+    if (!text || !selectedQuestions || !Array.isArray(selectedQuestions)) {
+        return res.status(400).json({ error: 'Text and selected questions array are required' });
+    }
+
+    try {
+        const answers = [];
+
+        // Loop through each selected question and get an answer from the Groq API
+        for (const question of selectedQuestions) {
+            const response = await groq.chat.completions.create({
+                messages: [
+                    {
+                        role: 'user',
+                        content: `Here is some text: ${text}\n\nQuestion: ${question}\n\nAnswer the question based on the text.`,
+                    },
+                ],
+                model: 'llama-3.3-70b-versatile',
+            });
+
+            const answer = response.choices[0]?.message?.content || 'No response from AI';
+            answers.push({ question, answer });
+        }
+
+        res.status(200).json({ answers });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Endpoint to ask a single question
 app.post('/ask', async (req, res) => {
     const { text, question } = req.body;
 
@@ -21,7 +87,6 @@ app.post('/ask', async (req, res) => {
     }
 
     try {
-        // Send the extracted text and question to the Groq API
         const response = await groq.chat.completions.create({
             messages: [
                 {
@@ -33,7 +98,6 @@ app.post('/ask', async (req, res) => {
         });
 
         const aiResponse = response.choices[0]?.message?.content || 'No response from AI';
-
         res.status(200).json({ profile: aiResponse });
     } catch (error) {
         console.error('Error:', error);

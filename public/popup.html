@@ -8,13 +8,22 @@
 </head>
 <body>
     <h2>Extracted Text</h2>
-    <button id="readText">Read Text</button>
+    <button id="readText">Read Screen Text</button>
     <textarea id="textOutput" readonly></textarea>
 
     <h2>Ask a Question</h2>
     <input type="text" id="questionInput" placeholder="Type your question here">
     <button id="askQuestion">Ask AI</button>
     <div id="aiResponse"></div>
+
+    <h2>Manage Questions</h2>
+    <input type="text" id="newQuestionInput" placeholder="Add a new question">
+    <button id="addQuestion">Add Question</button>
+    <ul id="questionList"></ul>
+
+    <!-- Add a button to answer selected questions -->
+    <button id="answerSelectedQuestions">Answer Selected Questions</button>
+    <div id="selectedAnswers"></div>
 
     <script src="popup.js"></script>
 </body>
