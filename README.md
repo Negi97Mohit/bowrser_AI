@@ -1,154 +1,71 @@
-Text Reader with AI Chrome Extension
-A Chrome extension that extracts text from webpages and allows users to ask questions about the extracted content using the Groq API. Users can also save and manage questions, selectively answer them, and view AI-generated responses.
+# 📖 Text Reader with AI - Chrome Extension
 
-Features
-Extract Text: Extract all visible text from any webpage.
+## 🚀 Overview
+The **Text Reader with AI** Chrome Extension extracts text from a webpage, formats it for better readability, and allows users to interact with an AI assistant by asking questions. The extension also supports managing frequently asked questions.
 
-Ask Questions: Ask questions about the extracted text and get AI-generated answers.
+## 🎯 Features
+- Extracts and formats text from the current webpage.
+- Uses AI to answer user queries based on extracted text.
+- Allows users to add, manage, and answer selected questions.
+- Provides structured output with proper formatting (bold headers, lists, etc.).
 
-Save Questions: Save questions for later use.
+## 📂 Project Structure
+```
+📂 text-reader-extension/
+├── 📄 manifest.json
+├── 📄 popup.html
+├── 🎨 styles.css
+├── 📜 popup.js
+└── 📜 background.js
+```
 
-Selective Answering: Choose specific questions to answer.
+## 🛠 Installation
+1. **Download the repository** or clone it:
+   ```sh
+   git clone https://github.com/your-username/text-reader-ai.git
+   ```
+2. **Open Chrome and go to Extensions:**
+   - Navigate to `chrome://extensions/`
+   - Enable **Developer Mode** (top-right corner)
+   - Click **Load unpacked**
+   - Select the extracted project folder
+3. **Use the extension:**
+   - Click the extension icon
+   - Extract and interact with text on any webpage!
 
-Clean Interface: Simple and intuitive user interface.
+## 🖥️ Usage
+1. **Click "Read Screen Text"** to extract and format webpage content.
+2. **Ask a question** using the AI-powered assistant.
+3. **Manage and save questions** for quick access later.
+4. **Answer selected questions** in a structured format.
 
-Screenshots
-Screenshot 1
-Extracted text and AI response.
+## 📝 Formatting Features
+- Bold headers (**Example Header**) → `<b>Example Header</b>`
+- Ordered lists (1., 2., 3.) → `<ol><li>Item</li></ol>`
+- Unordered lists (- Item) → `<ul><li>Item</li></ul>`
+- Proper paragraph breaks instead of `<br>` spam.
 
-Screenshot 2
-Saved questions and selective answering.
+## 🤖 AI Integration
+This extension connects with an AI API to provide intelligent responses based on extracted content. The AI processes:
+- Summarization
+- Question answering
+- Key insights extraction
 
-Installation
-Prerequisites
-Node.js: Ensure Node.js is installed on your system. Download it from here.
+## 🔧 Configuration
+- Ensure the backend AI API is properly configured in `popup.js`.
+- Modify `formatText()` in `popup.js` to tweak text display styles.
 
-Groq API Key: Obtain an API key from Groq.
+## 🛠️ Future Improvements
+- Support for more advanced text summarization.
+- Dark mode for better UI experience.
+- Options for different AI models.
 
-Steps
-Clone the Repository:
+## 💡 Contributing
+Feel free to submit pull requests or open issues to improve the extension. Contributions are always welcome!
 
-bash
-Copy
-git clone https://github.com/your-username/text-reader-extension.git
-cd text-reader-extension
-Set Up the Backend:
+## 📜 License
+This project is licensed under the MIT License.
 
-Navigate to the backend folder:
+---
+🔥 **Enhance your browsing experience with AI-powered text extraction and answering!**
 
-bash
-Copy
-cd backend
-Install dependencies:
-
-bash
-Copy
-npm install
-Create a .env file in the backend folder and add your Groq API key:
-
-Copy
-GROQ_API_KEY=your_groq_api_key_here
-PORT=5000
-Start the backend server:
-
-bash
-Copy
-npm start
-Load the Extension in Chrome:
-
-Open Chrome and go to chrome://extensions/.
-
-Enable Developer Mode (toggle in the top-right corner).
-
-Click Load unpacked and select the public folder inside the project directory.
-
-Use the Extension:
-
-Click the extension icon in the Chrome toolbar to open the popup.
-
-Extract text from a webpage and start asking questions!
-
-Usage
-Extract Text:
-
-Click the Read Text button to extract text from the current webpage.
-
-The extracted text will appear in the textarea.
-
-Ask a Question:
-
-Type your question in the input field and click Ask AI.
-
-The AI's response will be displayed below.
-
-Save Questions:
-
-Type a question in the Add a new question input field and click Add Question.
-
-The question will be saved and displayed in the list.
-
-Answer Selected Questions:
-
-Check the boxes next to the questions you want to answer.
-
-Click Answer Selected Questions to get AI-generated answers for the selected questions.
-
-Remove Questions:
-
-Click the Remove button next to a question to delete it from the list.
-
-File Structure
-Copy
-text-reader-extension/
-├── backend/
-│   ├── server.js           # Backend server using Express and Groq API
-│   ├── package.json        # Backend dependencies
-│   └── .env                # Environment variables (Groq API key)
-├── public/
-│   ├── icon.png            # Extension icon
-│   ├── popup.html          # Popup interface
-│   ├── popup.js            # Popup functionality
-│   ├── styles.css          # Popup styling
-│   ├── content.js          # Content script for text extraction
-│   └── manifest.json       # Extension manifest file
-└── README.md               # Project documentation
-Technologies Used
-Frontend:
-
-HTML, CSS, JavaScript
-
-Chrome Extensions API
-
-Backend:
-
-Node.js, Express
-
-Groq API
-
-Contributing
-Contributions are welcome! If you'd like to contribute, please follow these steps:
-
-Fork the repository.
-
-Create a new branch for your feature or bugfix.
-
-Commit your changes and push to the branch.
-
-Submit a pull request.
-
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-Acknowledgements
-Groq for providing the AI API.
-
-Chrome Extensions Documentation for guidance on building Chrome extensions.
-
-Contact
-For questions or feedback, feel free to reach out:
-
-Your Name: your-email@example.com
-
-GitHub: your-username
-
-Enjoy using the Text Reader with AI Chrome Extension! 🚀
