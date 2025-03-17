@@ -21,8 +21,8 @@ The **Text Reader with AI** Chrome Extension extracts text from a webpage, forma
 
 ## 🛠 Installation
 1. **Download the repository** or clone it:
-   ```sh
-   git clone https://github.com/your-username/text-reader-ai.git
+   ```sh[
+   git clone https://github.com/your-username/text-reader-ai.git](https://github.com/Negi97Mohit/bowrser_AI.git)
    ```
 2. **Open Chrome and go to Extensions:**
    - Navigate to `chrome://extensions/`
