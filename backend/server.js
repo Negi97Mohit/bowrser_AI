@@ -6,7 +6,21 @@ const cors = require('cors');
 dotenv.config();
 
 const app = express();
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+const API_KEYS = [
+    "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",
+    "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",
+    "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",
+    "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"
+];
+
+let currentKeyIndex = 0;
+const getApiKey = () => process.env.GROQ_API_KEY || API_KEYS[currentKeyIndex];
+const rotateApiKey = () => {
+    currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
+};
+
+let groq = new Groq({ apiKey: getApiKey() });
 
 // Middleware
 app.use(cors());
