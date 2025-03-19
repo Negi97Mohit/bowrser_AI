@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Text Reader with AI",
+  "name": "ScreenAI fujm",
   "version": "1.0",
   "description": "Extract text from webpages and ask questions using AI.",
   "permissions": ["activeTab", "scripting", "storage"],

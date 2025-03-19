@@ -13,6 +13,48 @@ h2 {
     margin-bottom: 8px;
 }
 
+
+/* styles.css */
+.loading-dots {
+    display: none; /* Hidden by default */
+    font-size: 48px; /* Increased size of dots */
+    color: #333;
+    text-align: center; /* Center the dots */
+}
+
+.loading-dots span {
+    opacity: 0;
+    animation: blink 1.4s infinite;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Optional: Add some spacing around the loading animation */
+#aiResponse, #selectedAnswers {
+    min-height: 100px; /* Ensure the container has some height */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent text from wrapping */
+    max-width: 100%; /* Ensure the container doesn't exceed its parent's width */
+}
 /* Button Styles */
 button {
     background: #007bff;

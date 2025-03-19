@@ -90,11 +90,15 @@ document.getElementById('answerSelectedQuestions').addEventListener('click', asy
     const selectedAnswersDiv = document.getElementById('selectedAnswers');
     selectedAnswersDiv.innerHTML = ''; // Clear previous answers
 
+    // Show loading animation
+    document.getElementById('loadingAnimation').style.display = 'inline-block';
+
     // Get the extracted text from storage
     chrome.storage.local.get(['extractedText'], async (result) => {
         const extractedText = result.extractedText;
         if (!extractedText) {
             alert('No text extracted yet. Please click "Read Text" first.');
+            document.getElementById('loadingAnimation').style.display = 'none'; // Hide loading animation
             return;
         }
 
@@ -104,6 +108,7 @@ document.getElementById('answerSelectedQuestions').addEventListener('click', asy
 
         if (selectedQuestions.length === 0) {
             alert('No questions selected. Please select at least one question.');
+            document.getElementById('loadingAnimation').style.display = 'none'; // Hide loading animation
             return;
         }
 
@@ -140,6 +145,58 @@ document.getElementById('answerSelectedQuestions').addEventListener('click', asy
         } catch (error) {
             console.error('Error:', error);
             selectedAnswersDiv.textContent = 'Failed to get answers. Please try again.';
+        } finally {
+            // Hide loading animation
+            document.getElementById('loadingAnimation').style.display = 'none';
+        }
+    });
+});
+
+// Function to ask a single question
+document.getElementById('askQuestion').addEventListener('click', async () => {
+    const question = document.getElementById('questionInput').value.trim();
+    if (!question) {
+        alert('Please enter a question.');
+        return;
+    }
+
+    // Show loading animation
+    document.getElementById('loadingAnimation').style.display = 'inline-block';
+    document.getElementById('aiResponse').innerHTML = ''; // Clear previous response
+
+    chrome.storage.local.get(['extractedText'], async (result) => {
+        const extractedText = result.extractedText;
+        if (!extractedText) {
+            alert('No text extracted yet. Please click "Read Text" first.');
+            document.getElementById('loadingAnimation').style.display = 'none'; // Hide loading animation
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:5000/ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    text: extractedText,
+                    question: question,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch AI response.');
+            }
+
+            const data = await response.json();
+            const aiResponse = data.profile;
+            document.getElementById('aiResponse').innerHTML = aiResponse; // Render the response
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('aiResponse').textContent = 'Failed to get AI response. Please try again.';
+        } finally {
+            // Hide loading animation
+            document.getElementById('loadingAnimation').style.display = 'none';
         }
     });
 });
@@ -165,45 +222,6 @@ document.getElementById('readText').addEventListener('click', () => {
 
 
 // Function to ask a single question
-document.getElementById('askQuestion').addEventListener('click', async () => {
-    const question = document.getElementById('questionInput').value.trim();
-    if (!question) {
-        alert('Please enter a question.');
-        return;
-    }
-
-    chrome.storage.local.get(['extractedText'], async (result) => {
-        const extractedText = result.extractedText;
-        if (!extractedText) {
-            alert('No text extracted yet. Please click "Read Text" first.');
-            return;
-        }
-
-        try {
-            const response = await fetch('http://localhost:5000/ask', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    text: extractedText,
-                    question: question,
-                }),
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch AI response.');
-            }
-
-            const data = await response.json();
-            const aiResponse = data.profile;
-            document.getElementById('aiResponse').textContent = aiResponse;
-        } catch (error) {
-            console.error('Error:', error);
-            document.getElementById('aiResponse').textContent = 'Failed to get AI response. Please try again.';
-        }
-    });
-});
 
 // Load questions when the popup opens
 document.addEventListener('DOMContentLoaded', fetchAndDisplayQuestions);
